@@ -8,21 +8,14 @@
 <body>
     <h1>กรอกเลขหวยลาว</h1>
     <form id="lotteryForm">
-        <table>
+        <table id="lotteryTable">
             <tr>
                 <th>เลข</th>
                 <th>บน</th>
                 <th>ล่าง</th>
                 <th>โต๊ด</th>
             </tr>
-            <!-- เพิ่มแถวเลขที่ต้องการประมาณ 20 แถว -->
-            <tr>
-                <td><input type="text" name="num1" required></td>
-                <td><input type="text" name="top1"></td>
-                <td><input type="text" name="bottom1"></td>
-                <td><input type="text" name="pair1"></td>
-            </tr>
-            <!-- เพิ่มแถวเลขอื่นๆ จนครบ 20 แถว -->
+            <!-- แถวจะถูกสร้างโดย JavaScript -->
         </table>
         <button type="submit">ส่งบิล</button>
     </form>
@@ -30,6 +23,20 @@
     <div id="result"></div>
 
     <script>
+        // สร้างแถวให้แสดงทั้งหมด 20 แถว
+        const numRows = 20;
+        const table = document.getElementById('lotteryTable');
+
+        for (let i = 1; i <= numRows; i++) {
+            const row = table.insertRow();
+            row.innerHTML = `
+                <td><input type="text" name="num${i}" required></td>
+                <td><input type="text" name="top${i}"></td>
+                <td><input type="text" name="bottom${i}"></td>
+                <td><input type="text" name="pair${i}"></td>
+            `;
+        }
+
         document.getElementById('lotteryForm').onsubmit = async function(event) {
             event.preventDefault();
             const formData = new FormData(this);
@@ -45,7 +52,7 @@
             });
 
             const result = await response.json();
-            document.getElementById('result').innerText = `รวม: ${result.total}`;
+            document.getElementById('result').innerText = `บันทึกเลขสำเร็จ! รวม: ${result.total}`;
         };
     </script>
 </body>
