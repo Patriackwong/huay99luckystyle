@@ -30,7 +30,7 @@
         for (let i = 1; i <= numRows; i++) {
             const row = table.insertRow();
             row.innerHTML = `
-                <td><input type="text" name="num${i}" required></td>
+                <td><input type="text" name="num${i}"></td>
                 <td><input type="text" name="top${i}"></td>
                 <td><input type="text" name="bottom${i}"></td>
                 <td><input type="text" name="pair${i}"></td>
@@ -41,8 +41,10 @@
             event.preventDefault();
             const formData = new FormData(this);
             const data = {};
+
+            // ส่งข้อมูลจากฟอร์มเป็น JSON แม้ว่าช่องจะว่าง
             formData.forEach((value, key) => {
-                data[key] = value;
+                data[key] = value.trim() ? value : ''; // หากช่องว่างจะเก็บเป็นค่าว่าง
             });
 
             // ส่งข้อมูลไปยัง Google Apps Script
